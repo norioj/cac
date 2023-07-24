@@ -1,0 +1,31 @@
+
+function TP(P1, offsetY)
+    spawn(function()
+        if not game.Players.LocalPlayer.Character.PrimaryPart:FindFirstChild("Hold") then
+            local Hold = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.PrimaryPart)
+            Hold.Name = "Hold"
+            Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+            Hold.Velocity = Vector3.new(0, 0, 0)
+        end
+        Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+        if not offsetY then
+            offsetY = 0
+        end
+        local mul = 1
+        if Distance < 250 then
+            Speed = 700 * mul
+        elseif Distance < 500 then
+            Speed = 500 * mul
+        elseif Distance < 1000 then
+            Speed = 450 * mul
+        elseif Distance >= 1000 then
+            Speed = 350 * mul
+        end
+        game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance / Speed, Enum.EasingStyle.Linear),{ CFrame = P1 * CFrame.new(0, offsetY, 0)}):Play()
+    end)
+end
+
+
+--- cách dùng ---
+
+  TP(target.CFrame, 25)
